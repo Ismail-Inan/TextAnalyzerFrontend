@@ -1,0 +1,52 @@
+<div class="main-container">
+
+  <h1 class="title">Text Analyzer</h1>
+
+  <div class="input-container">
+    <textarea maxlength="1000" [(ngModel)]="inputText" placeholder="Enter text here" autosize></textarea>
+    <button id="analyze-button" (click)="analyzeText()">Analyze</button>
+  </div>
+
+  <div class="settings-container">
+
+    <div class="analysis-mode-container">
+      <select id="analysis-mode-select" [(ngModel)]="analysisMode">
+        <option value="vowels">Vowels</option>
+        <option value="consonants">Consonants</option>
+      </select>
+    </div>
+
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="onlineMode" />
+        <span class="slider round"></span>
+      </label>
+      <label class="toggle-label">Online</label>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="analysisResult" class="result-container">
+    <h3>Analysis Result:</h3>
+    <div *ngIf="!isResultEmpty(analysisResult.characterCounts)">
+      <div class="result-item" *ngFor="let entry of analysisResult.characterCounts | keyvalue">
+        Letter '{{ entry.key }}' appears {{ entry.value }} times
+      </div>
+    </div>
+    <div *ngIf="isResultEmpty(analysisResult.characterCounts)" class="result-item">Nothing found in this text.</div>
+  </div>
+
+  <div *ngIf="previousResult" class="result-container previous-result-container">
+    <h3>Previous Analysis Result:</h3>
+    <div *ngIf="!isResultEmpty(previousResult.characterCounts)">
+      <div class="result-item" *ngFor="let entry of previousResult.characterCounts | keyvalue">
+        Letter '{{ entry.key }}' appears {{ entry.value }} times
+      </div>
+    </div>
+    <div *ngIf="isResultEmpty(previousResult.characterCounts)" class="result-item">Nothing found in this text.</div>
+  </div>
+
+</div>
